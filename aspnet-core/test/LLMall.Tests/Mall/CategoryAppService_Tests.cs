@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
@@ -10,21 +11,27 @@ using LLMall.Mall.Dto;
 
 namespace LLMall.Tests.Users
 {
-    public class BannerAppService_Tests : LLMallTestBase
+    public class CategoryAppService_Tests : LLMallTestBase
     {
-        private readonly IBannerAppService _bannerAppService;
+        private readonly ICategoryAppService _categoryAppService;
 
-        public BannerAppService_Tests()
+        public CategoryAppService_Tests()
         {
-            _bannerAppService = Resolve<IBannerAppService>();
+            _categoryAppService = Resolve<ICategoryAppService>();
         }
 
         [Fact]
         public async Task Add_Test()
         {
             // Act
-            var output = await _bannerAppService.Add(new BannerDto { Name = "1", PicUrl = "2" });
-
+            var output = await _categoryAppService.Create(new CategoryDto
+            {
+                Name = "1", PicUrl = "2",
+                CategoryList = new List<CategoryDto>
+                {
+                    new CategoryDto{Name = "11", PicUrl = "22",}
+                }
+            });
             // Assert
             Assert.NotEqual(0, output.Id);
 

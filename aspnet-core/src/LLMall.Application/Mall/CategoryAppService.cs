@@ -1,4 +1,5 @@
-﻿using Abp.Application.Services;
+﻿using System.Collections.Generic;
+using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
@@ -14,11 +15,6 @@ namespace LLMall.Mall
     {
         public CategoryAppService(IRepository<Category, int> repository) : base(repository)
         {
-        }
-
-        public override Task<CategoryDto> Create(CategoryDto input)
-        {
-            return base.Create(input);
         }
     }
 }

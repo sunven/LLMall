@@ -36,6 +36,8 @@ namespace LLMall.Mall.Dto
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<Category> CategoryList { get; set; }
+        public ICollection<CategoryDto> CategoryList { get; set; }
+        
+        public bool IsDeleted { get; set; }
     }
 }
