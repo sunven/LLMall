@@ -1,13 +1,11 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using System.Collections.Generic;
 
 namespace LLMall.Mall.Dto
 {
     [AutoMapFrom(typeof(Category))]
     public class CategoryDto : EntityDto<int>
     {
-        public int Id { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -36,8 +34,11 @@ namespace LLMall.Mall.Dto
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<CategoryDto> CategoryList { get; set; }
-        
-        public bool IsDeleted { get; set; }
+        public string Code { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ParentCode { get; set; }
     }
 }

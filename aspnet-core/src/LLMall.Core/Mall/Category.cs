@@ -1,5 +1,4 @@
 ﻿using Abp.Domain.Entities;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace LLMall.Mall
@@ -36,18 +35,12 @@ namespace LLMall.Mall
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<Category> CategoryList { get; set; }
+        public string Code { get; set; }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public string Code { get; set; }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public string ParentCode { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ParentCode { get; set; }
 
         public bool IsDeleted { get; set; }
     }
