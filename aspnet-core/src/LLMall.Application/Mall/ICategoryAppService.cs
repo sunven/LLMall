@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LLMall.Mall
 {
-    public interface ICategoryAppService : IAsyncCrudAppService<CategoryDto, int>
+    public interface ICategoryAppService : IAsyncCrudAppService<CategoryDto, int,CategorySearchDto>
     {
     }
 }
