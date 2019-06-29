@@ -40,5 +40,7 @@ namespace LLMall.Mall.Dto
         /// 
         /// </summary>
         public string ParentCode { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

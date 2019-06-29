@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Abp.Application.Services;
-using Abp.Application.Services.Dto;
-using Abp.Authorization;
+﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
-using LLMall.Authorization;
+using Abp.Specifications;
 using LLMall.Mall.Dto;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Abp.Specifications;
 
 namespace LLMall.Mall
 {
     //[AbpAuthorize(PermissionNames.Pages_Users)]
-    public class CategoryAppService : AsyncCrudAppService<Category, CategoryDto, int,CategorySearchDto>, ICategoryAppService
+    public class CategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, CategorySearchDto>, ICategoryAppService
     {
         public CategoryAppService(IRepository<Category, int> repository) : base(repository)
         {
@@ -25,7 +21,14 @@ namespace LLMall.Mall
             var max = Repository.GetAll().Where(c => c.ParentId == input.ParentId).OrderByDescending(c => c.Code).FirstOrDefault();
             if (max == null)
             {
-                input.Code = "01";
+                if (input.ParentId == 0)
+                {
+                    input.Code = "01";
+                }
+                else
+                {
+                    input.Code = input.ParentCode + "01";
+                }
             }
             else
             {
@@ -33,30 +36,24 @@ namespace LLMall.Mall
                 if (int.TryParse(max.Code, out var intCode))
                 {
                     intCode++;
-                    strCode = intCode > 9 ? "" : "0" + intCode.ToString();
+                    //todo 大于99的判断
+                    strCode = "0" + intCode.ToString();
                 }
                 else
                 {
-                    strCode = "01";
+                    strCode = input.ParentCode + "01";
                 }
-                if (input.ParentId == 0)
-                {
-                    input.Code = strCode;
-                }
-                else
-                {
-                    input.Code = max.Code + strCode;
-                }
+                input.Code = strCode;
             }
             return base.Create(input);
         }
 
         protected override IQueryable<Category> CreateFilteredQuery(CategorySearchDto input)
         {
-            Expression<Func<Category, bool>> exp=c=>true;
+            Expression<Func<Category, bool>> exp = c => true;
             if (input.ParentId.HasValue)
             {
-                exp =exp.And(c => c.ParentId == input.ParentId);
+                exp = exp.And(c => c.ParentId == input.ParentId);
             }
             return Repository.GetAll().Where(exp);
         }

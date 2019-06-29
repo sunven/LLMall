@@ -26,11 +26,7 @@ namespace LLMall.Tests.Users
             // Act
             var output = await _categoryAppService.Create(new CategoryDto
             {
-                Name = "1", PicUrl = "2",
-                CategoryList = new List<CategoryDto>
-                {
-                    new CategoryDto{Name = "11", PicUrl = "22",}
-                }
+                Name = "1", PicUrl = "2"
             });
             // Assert
             Assert.NotEqual(0, output.Id);
